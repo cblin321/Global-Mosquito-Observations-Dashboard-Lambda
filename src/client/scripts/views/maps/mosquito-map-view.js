@@ -184,27 +184,6 @@ export default BaseMapView.extend(_.extend({}, ObservationPopups, {
 				className: source.replace(/_/g, '-') + ' marker',
 			});
 
-			/*
-			// get marker icon
-			//
-			if (!this.icons[source]) {
-				this.icons[source] = new L.DivIcon({
-					html: `<div></div>`,
-					className: source.replace(/_/g, '-') + ' marker',
-					iconSize: Browser.is_mobile? defaults.map.markerSize.mobile : defaults.map.markerSize.desktop
-				});
-			}
-			let icon = this.icons[source];
-
-			// create marker
-			//
-			let marker = L.marker([observation.y, observation.x], {
-				icon: icon,
-				source: source,
-				id: observation.id
-			});
-			*/
-
 			// save reference to marker
 			//
 			this.markers[observation.id] = marker;
@@ -227,6 +206,20 @@ export default BaseMapView.extend(_.extend({}, ObservationPopups, {
 		}
 	},
 
+	locationInBounds(location, bounds) {
+		if (bounds.lat) {
+			if (location.y < bounds.lat.min || location.y > bounds.lat.max) {
+				return false;
+			}
+		}
+		if (bounds.lon) {
+			if (location.x < bounds.lon.min || location.x > bounds.lon.max) {
+				return false;
+			}
+		}
+		return true;
+	},
+
 	addClusteredMarkers: function(map, source, observations, selected) {
 
 		// create new cluster group, if necessary
@@ -237,7 +230,14 @@ export default BaseMapView.extend(_.extend({}, ObservationPopups, {
 		let clusterGroup = this.clusterGroups[source];
 
 		for (let i = 0; i < observations.length; i++) {
-			this.addClusteredMarker(clusterGroup, source, observations[i], selected);
+			let observation = observations[i];
+			if (defaults.map.bounds) {
+				if (this.locationInBounds(observation, defaults.map.bounds)) {
+					this.addClusteredMarker(clusterGroup, source, observations[i], selected);
+				}
+			} else {
+				this.addClusteredMarker(clusterGroup, source, observations[i], selected);
+			}
 		}
 
 		// add cluster to map

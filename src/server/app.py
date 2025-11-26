@@ -198,7 +198,7 @@ def get_species():
 
 if __name__ == '__main__':
 
-	if (app.config['PORT'] == 443):
-		app.run(host=os.getenv['HOST'], port=443, ssl_context=(os.getenv['SSL_CERT'], os.getenv['SSL_KEY']), threaded=True, debug=True)
+	if os.getenv('HOST') == 443:
+		app.run(host=os.getenv('HOST'), port=443, ssl_context=(os.getenv('SSL_CERT'), os.getenv('SSL_KEY')), threaded=True, debug=True)
 	else:
-		app.run(host=os.getenv['HOST'], port=os.getenv['PORT'], threaded=True, debug=True)
+		app.run(host=os.getenv('HOST'), port=os.getenv('PORT'), threaded=True, debug=True)
