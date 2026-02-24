@@ -13,16 +13,15 @@
 ################################################################################
 
 import os
-import mysql.connector
 from flask import Flask, request
-from controllers.observation_controller import ObservationController
+from flask_cors import CORS
+from dotenv import load_dotenv
 from controllers.habitat_mapper_controller import HabitatMapperController
 from controllers.inaturalist_controller import iNaturalistController
 from controllers.land_cover_controller import LandCoverController
 from controllers.mosquito_alert_controller import MosquitoAlertController
+from controllers.digitomy_controller import DigitomyController
 from controllers.country_controller import CountryController
-from flask_cors import CORS
-from dotenv import load_dotenv
 
 ################################################################################
 #                                initialization                                #
@@ -55,11 +54,19 @@ CORS(app)
 
 @app.get('/')
 def get_home():
+
+	"""
+	Get API home message.
+
+	Return
+		html
+	"""
+
 	return "<h1>Welcome to the Mosquito Observations API.</h1>"
 
 @app.get('/observations/<source>')
-def get_observations(source):
-	
+def get_observations(source: str):
+
 	"""
 	Get observation information.
 
@@ -88,10 +95,12 @@ def get_observations(source):
 			return LandCoverController.get_all(db, options)
 		case 'mosquito-alert':
 			return MosquitoAlertController.get_all(db, options)
+		case 'digitomy':
+			return DigitomyController.get_all(db, options)
 
 @app.get('/observations/<source>/<id>')
-def get_observation(source, id):
-	
+def get_observation(source: str, id: str):
+
 	"""
 	Get observation information.
 
@@ -108,10 +117,12 @@ def get_observation(source, id):
 			return LandCoverController.get_index(db, id)
 		case 'mosquito-alert':
 			return MosquitoAlertController.get_index(db, id)
+		case 'digitomy':
+			return DigitomyController.get_index(db, id)
 
 @app.get('/observations/<source>/num')
-def get_num_observations(source):
-	
+def get_num_observations(source: str):
+
 	"""
 	Get number of observations.
 
@@ -121,8 +132,8 @@ def get_num_observations(source):
 
 	# get query string parameters
 	#
-	before = request.args.get('before');
-	after = request.args.get('after');
+	before = request.args.get('before')
+	after = request.args.get('after')
 	options = {
 		'before': before,
 		'after': after
@@ -139,6 +150,8 @@ def get_num_observations(source):
 			return LandCoverController.get_num(db, options)
 		case 'mosquito-alert':
 			return MosquitoAlertController.get_num(db, options)
+		case 'digitomy':
+			return DigitomyController.get_num(db, options)
 
 @app.get('/countries')
 def get_countries():
@@ -174,11 +187,10 @@ def get_genera():
 		array: The list of genera (from iNaturalist).
 	"""
 
-	indices = request.args.get('indices');
+	indices = request.args.get('indices')
 	if indices:
 		return iNaturalistController.get_genera_by_indices(db, indices)
-	else:
-		return iNaturalistController.get_genera(db)
+	return iNaturalistController.get_genera(db)
 
 @app.get('/species')
 def get_species():
@@ -198,7 +210,7 @@ def get_species():
 
 if __name__ == '__main__':
 
-	if os.getenv('HOST') == 443:
+	if os.getenv('PORT') == 443:
 		app.run(host=os.getenv('HOST'), port=443, ssl_context=(os.getenv('SSL_CERT'), os.getenv('SSL_KEY')), threaded=True, debug=True)
 	else:
 		app.run(host=os.getenv('HOST'), port=os.getenv('PORT'), threaded=True, debug=True)

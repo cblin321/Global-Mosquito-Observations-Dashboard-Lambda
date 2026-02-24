@@ -13,6 +13,7 @@
 ################################################################################
 
 import flask
+from array import array
 from flask import request, jsonify
 from controllers.controller import Controller
 
@@ -23,7 +24,7 @@ class ObservationController(Controller):
 	#
 
 	@staticmethod
-	def add_filter(query, column, operator, value):
+	def add_filter(query: str, column: str, operator: str, value):
 		if column:
 			if 'WHERE' in query:
 				query += " AND " + column + " " + operator + " '" + value + "'"
@@ -31,7 +32,7 @@ class ObservationController(Controller):
 				query += " WHERE " + column + " " + operator + " '" + value + "'"
 		return query
 
-	def add_countries_filter(query, column, countries):
+	def add_countries_filter(query: str, column: str, countries: array):
 		if countries is None:
 			return query
 
@@ -57,14 +58,14 @@ class ObservationController(Controller):
 		return query
 
 	@staticmethod
-	def add_date_filter(query, column, after, before):
+	def add_date_filter(query: str, column: str, after: str, before: str):
 		if after:
 			query = ObservationController.add_filter(query, column, '>=', after)
 		if before:
 			query = ObservationController.add_filter(query, column, '<', before)
 		return query
 
-	def add_genera_filter(query, column, genera):
+	def add_genera_filter(query: str, column: str, genera: array):
 		if genera is None:
 			return query
 
@@ -89,7 +90,7 @@ class ObservationController(Controller):
 
 		return query
 
-	def add_species_filter(query, column, species):
+	def add_species_filter(query: str, column: str, species: array):
 		if species is None:
 			return query
 
@@ -119,7 +120,7 @@ class ObservationController(Controller):
 	#
 
 	@staticmethod
-	def get_genera(db, table):
+	def get_genera(db: object, table: str):
 
 		# connect to database
 		#
@@ -156,7 +157,7 @@ class ObservationController(Controller):
 		return genera
 
 	@staticmethod
-	def get_genera_by_indices(db, table, indices):
+	def get_genera_by_indices(db: object, table: str, indices: array):
 		if indices is None:
 			return []
 		array = []
@@ -172,7 +173,7 @@ class ObservationController(Controller):
 	#
 
 	@staticmethod
-	def get_all(db, query):
+	def get_all(db: object, query: str):
 
 		# connect to database
 		#
@@ -192,7 +193,7 @@ class ObservationController(Controller):
 		return data
 
 	@staticmethod
-	def get_one(db, query):
+	def get_one(db: object, query: str):
 
 		# connect to database
 		#
@@ -210,7 +211,7 @@ class ObservationController(Controller):
 		return data
 
 	@staticmethod
-	def get_value(db, query):
+	def get_value(db: object, query: str):
 
 		# connect to database
 		#

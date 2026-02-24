@@ -20,7 +20,7 @@ import json
 import sys
 import math
 
-sys.path.insert(0, '../../translation/land-cover') 
+sys.path.insert(0, '../../translators/land-cover') 
 from utilities.json_translator import LandCoverTranslator
 
 class LandCoverAPI:

@@ -13,6 +13,7 @@
 ################################################################################
 
 import flask
+from array import array
 from flask import request, jsonify
 from controllers.controller import Controller
 from models.country import Country
@@ -24,7 +25,7 @@ class CountryController(Controller):
 	#
 
 	@staticmethod
-	def get_all(db):
+	def get_all(db: object):
 
 		# connect to database
 		#
@@ -48,7 +49,7 @@ class CountryController(Controller):
 		return data
 
 	@staticmethod
-	def get_by_indices(db, indices):
+	def get_by_indices(db: object, indices: array):
 		if indices is None:
 			return []
 		array = []
@@ -60,7 +61,7 @@ class CountryController(Controller):
 		return array
 
 	@staticmethod
-	def get_index(db, id):
+	def get_index(db: object, id: str):
 
 		# connect to database
 		#
@@ -82,7 +83,7 @@ class CountryController(Controller):
 		return data
 
 	@staticmethod
-	def get_num(db):
+	def get_num(db: object):
 
 		# connect to database
 		#

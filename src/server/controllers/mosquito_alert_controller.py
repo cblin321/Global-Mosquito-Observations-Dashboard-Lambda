@@ -25,7 +25,7 @@ class MosquitoAlertController(ObservationController):
 	#
 
 	@staticmethod
-	def get_all(db, options):
+	def get_all(db: object, options: object):
 
 		# create query
 		#
@@ -52,7 +52,7 @@ class MosquitoAlertController(ObservationController):
 		return observations
 
 	@staticmethod
-	def get_index(db, id):
+	def get_index(db: object, id: object):
 
 		# create query
 		#
@@ -65,7 +65,7 @@ class MosquitoAlertController(ObservationController):
 		return MosquitoAlertObservation.to_values(data)
 
 	@staticmethod
-	def get_num(db, options):
+	def get_num(db: object, options: object):
 
 		# create query
 		#

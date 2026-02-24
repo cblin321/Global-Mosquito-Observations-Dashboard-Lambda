@@ -20,7 +20,7 @@ import json
 import sys
 import math
 
-sys.path.insert(0, '../../translation/mosquito-alert') 
+sys.path.insert(0, '../../translators/mosquito-alert') 
 from utilities.json_translator import MosquitoAlertTranslator
 
 class MosquitoAlertAPI:

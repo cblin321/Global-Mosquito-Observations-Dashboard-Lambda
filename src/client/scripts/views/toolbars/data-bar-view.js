@@ -46,6 +46,10 @@ export default ToolbarView.extend({
 			<button class="mosquito-alert data-source" data-source="mosquito-alert" data-toggle="tooltip" title="Mosquito Alert" data-placement="right">
 				<i class="fa fa-exclamation-triangle"></i>
 			</button>
+
+			<button class="digitomy data-source" data-source="digitomy" data-toggle="tooltip" title="Digitomy" data-placement="right">
+				<i class="fa fa-crosshairs"></i>
+			</button>
 		</div>
 	`),
 

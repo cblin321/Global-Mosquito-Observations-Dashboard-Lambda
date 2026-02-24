@@ -81,7 +81,7 @@ class HabitatMapperObservation(Observation):
 	# constructor
 	#
 
-	def __init__(self, attributes = {}):
+	def __init__(self, attributes: object = {}):
 
 		"""
 		Creates a new model with the specified attributes.
@@ -100,16 +100,14 @@ class HabitatMapperObservation(Observation):
 	#
 
 	@staticmethod
-	def to_value(key, data):
+	def to_value(key: str, data: object):
 		if key in HabitatMapperObservation.casts['urls']:
-			print("casting to urls")
 			return Observation.to_urls(data)
 		else:
 			return data
 
 	@staticmethod
-	def to_values(data):
-		print("in to_values")
+	def to_values(data: object):
 		fields = {}
 		count = 0
 		for key in HabitatMapperObservation.fields:

@@ -101,7 +101,7 @@ class iNaturalistObservation(Observation):
 	# constructor
 	#
 
-	def __init__(self, attributes = {}):
+	def __init__(self, attributes: object = {}):
 
 		"""
 		Creates a new model with the specified attributes.
@@ -120,7 +120,7 @@ class iNaturalistObservation(Observation):
 	#
 
 	@staticmethod
-	def to_value(key, data):
+	def to_value(key: str, data: object):
 		if key in iNaturalistObservation.casts['objects']:
 			return Observation.to_object(data)
 		elif key in iNaturalistObservation.casts['objects2']:
@@ -129,7 +129,7 @@ class iNaturalistObservation(Observation):
 			return data
 
 	@staticmethod
-	def to_values(data):
+	def to_values(data: object):
 		fields = {}
 		count = 0
 		for key in iNaturalistObservation.fields:

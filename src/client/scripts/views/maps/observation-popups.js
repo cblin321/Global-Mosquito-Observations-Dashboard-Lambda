@@ -83,6 +83,13 @@ export default {
 		return terms.join(' ');
 	},
 
+	toLocation: function(location) {
+		if (location && location.y && location.x) {
+			return [location.y.toPrecision(6), location.x.toPrecision(6)];
+		}
+		return location;
+	},
+
 	//
 	// ajax functions
 	//
@@ -150,7 +157,7 @@ export default {
 				site: data.mhm_siteName,
 				genus: this.formatName(data.mhm_Genus),
 				species: this.formatName(data.mhm_Species),
-				location: [data.y, data.x],
+				location: this.toLocation(data),
 				habitat_type: data.mhm_WaterSourceType,
 				habitat: data.mhm_WaterSource,
 				thumb_urls: data.mhm_LarvaFullBodyPhotoUrls.concat(data.mhm_WaterSourcePhotoUrls),
@@ -165,7 +172,7 @@ export default {
 			attributes: {
 				date: new Date(data.observationResCatObsPheTime).toLocaleDateString(),
 				time: new Date(data.observationResCatObsPheTime).toTimeString(),
-				location: [data.y, data.x],
+				location: this.toLocation(data),
 				genus: this.formatName(data.Indentified_by_Human),
 				common_name: data.ObsCPCommonName,
 				thumb_urls: data.observationImaImaResult.map((result) => {
@@ -184,7 +191,7 @@ export default {
 			attributes: {
 				date: new Date(data.phenomenonTime).toLocaleDateString(),
 				time: new Date(data.phenomenonTime).toTimeString(),
-				location: [data.y, data.x],
+				location: this.toLocation(data),
 				thumb_urls: data.imageResult && this.hasNonNullObject(data.imageResult)? [
 					data.imageResult.lc_NorthPhotoUrl,
 					data.imageResult.lc_SouthPhotoUrl,
@@ -220,12 +227,29 @@ export default {
 				date: new Date(data.observationResCatObsPheTime).toLocaleDateString(),
 				time: new Date(data.observationResCatObsPheTime).toTimeString(),
 				site: data.locationName,
-				location: [data.y, data.x],
+				location: this.toLocation(data),
 				species: this.formatName(data.Indentified_by_Human),
 				'adult, bite, or site': data.dataStreamDescription,
 				research_grade: data.omPrcoessResQuaQuaGrade,
 				thumb_urls: data.observationImaImaResult? [data.observationImaImaResult] : null,
 				photo_urls: data.observationImaImaResult? [data.observationImaImaResult] : null
+			}
+		}
+	},
+
+	getDigitomyPopupData: function(data) {
+		let root = 'images/observations/digitomy/'
+		let url = root + data.mosquito_gcs_url.split('/').at(-1);
+
+		return {
+			title: 'Digitomy',
+			attributes: {
+				date: new Date(data.captured_at).toLocaleDateString(),
+				time: new Date(data.captured_at).toTimeString(),
+				site: this.toLocation(data.location),
+				location: [data.y.toPrecision(6), data.x.toPrecision(6)],
+				thumb_urls: [url],
+				photo_urls: [url]
 			}
 		}
 	},
@@ -240,6 +264,8 @@ export default {
 				return this.getLandCoverPopupData(data);
 			case 'mosquito_alert':
 				return this.getMosquitoAlertPopupData(data);
+			case 'digitomy':
+				return this.getDigitomyPopupData(data);
 			default:
 				alert("Unknown data source.")
 		}

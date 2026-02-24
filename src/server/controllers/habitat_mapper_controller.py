@@ -24,7 +24,7 @@ class HabitatMapperController(ObservationController):
 	#
 
 	@staticmethod
-	def get_all(db, options):
+	def get_all(db: object, options: object):
 		
 		# create query
 		#
@@ -52,7 +52,7 @@ class HabitatMapperController(ObservationController):
 		return observations
 
 	@staticmethod
-	def get_index(db, id):
+	def get_index(db: object, id: str):
 
 		# create query
 		#
@@ -65,7 +65,7 @@ class HabitatMapperController(ObservationController):
 		return HabitatMapperObservation.to_values(data)
 
 	@staticmethod
-	def get_num(db, options):
+	def get_num(db: object, options: object):
 
 		# create query
 		#

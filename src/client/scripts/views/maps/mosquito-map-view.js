@@ -65,7 +65,8 @@ export default BaseMapView.extend(_.extend({}, ObservationPopups, {
 		'habitat_mapper',
 		'land_cover',
 		'inaturalist',
-		'mosquito_alert'
+		'mosquito_alert',
+		'digitomy'
 	],
 
 	//

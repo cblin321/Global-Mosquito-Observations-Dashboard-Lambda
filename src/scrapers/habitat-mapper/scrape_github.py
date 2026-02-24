@@ -20,7 +20,7 @@ import json
 import csv
 import requests
 
-sys.path.insert(0, '../../translation/habitat-mapper')
+sys.path.insert(0, '../../translators/habitat-mapper')
 from csv_translator import Translator
 
 #

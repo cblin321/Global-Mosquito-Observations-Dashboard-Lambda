@@ -17,7 +17,7 @@ import logging
 
 class Controller:
 
-	def connect(db):
+	def connect(db: object):
 
 		# connect to database
 		#

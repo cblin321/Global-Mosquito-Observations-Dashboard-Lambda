@@ -20,7 +20,7 @@ import json
 import sys
 import math
 
-sys.path.insert(0, '../../translation/habitat-mapper') 
+sys.path.insert(0, '../../translators/habitat-mapper') 
 from utilities.json_translator import HabitatMapperTranslator
 
 class HabitatMapperAPI:

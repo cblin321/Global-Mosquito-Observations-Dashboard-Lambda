@@ -26,7 +26,7 @@ class Country(Model):
 	# constructor
 	#
 
-	def __init__(self, attributes = {}):
+	def __init__(self, attributes: object = {}):
 
 		"""
 		Creates a new model with the specified attributes.

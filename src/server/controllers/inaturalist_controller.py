@@ -12,6 +12,7 @@
 #     Copyright (C) 2025, Data Science Institute, University of Wisconsin      #
 ################################################################################
 
+from array import array
 from models.observation import Observation
 from models.inaturalist_observation import iNaturalistObservation
 from controllers.observation_controller import ObservationController
@@ -23,7 +24,7 @@ class iNaturalistController(ObservationController):
 	#
 
 	@staticmethod
-	def get_all(db, options):
+	def get_all(db: object, options: object):
 
 		# create query
 		#
@@ -50,7 +51,7 @@ class iNaturalistController(ObservationController):
 		return observations
 
 	@staticmethod
-	def get_index(db, id):
+	def get_index(db: object, id: str):
 
 		# create query
 		#
@@ -63,7 +64,7 @@ class iNaturalistController(ObservationController):
 		return iNaturalistObservation.to_values(data)
 
 	@staticmethod
-	def get_num(db, options):
+	def get_num(db: object, options: object):
 
 		# create query
 		#
@@ -88,12 +89,12 @@ class iNaturalistController(ObservationController):
 	#
 
 	@staticmethod
-	def get_genera(db):
+	def get_genera(db: object):
 		table = iNaturalistObservation().table
 		return ObservationController.get_genera(db, table)
 
 	@staticmethod
-	def get_genera_by_indices(db, indices):
+	def get_genera_by_indices(db: object, indices: array):
 		table = iNaturalistObservation().table
 		return ObservationController.get_genera_by_indices(db, table, indices)
 
@@ -102,7 +103,7 @@ class iNaturalistController(ObservationController):
 	#
 
 	@staticmethod
-	def get_species(db):
+	def get_species(db: object):
 
 		# connect to database
 		#
@@ -138,7 +139,7 @@ class iNaturalistController(ObservationController):
 		return species2
 
 	@staticmethod
-	def get_species_by_indices(db, indices):
+	def get_species_by_indices(db: object, indices: array):
 		if indices is None:
 			return []
 		array = []

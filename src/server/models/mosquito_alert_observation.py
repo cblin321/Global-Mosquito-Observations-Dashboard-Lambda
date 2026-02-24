@@ -117,7 +117,7 @@ class MosquitoAlertObservation(Observation):
 	# constructor
 	#
 
-	def __init__(self, attributes = {}):
+	def __init__(self, attributes: object = {}):
 
 		"""
 		Creates a new model with the specified attributes.
@@ -136,14 +136,14 @@ class MosquitoAlertObservation(Observation):
 	#
 
 	@staticmethod
-	def to_value(key, data):
+	def to_value(key: str, data: object):
 		if key in MosquitoAlertObservation.casts['objects']:
 			return Observation.to_object(data)
 		else:
 			return data
 
 	@staticmethod
-	def to_values(data):
+	def to_values(data: object):
 		fields = {}
 		count = 0
 		for key in MosquitoAlertObservation.fields:

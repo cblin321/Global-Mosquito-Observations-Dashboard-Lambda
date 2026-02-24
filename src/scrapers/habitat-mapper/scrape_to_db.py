@@ -21,9 +21,6 @@ import mysql.connector
 from utilities.habitat_mapper_api import HabitatMapperAPI
 from utilities.habitat_mapper_observation import HabitatMapperObservation
 
-sys.path.insert(0, '../../esri')
-from utilities.feature_layer import FeatureLayer
-
 #
 # globals
 #

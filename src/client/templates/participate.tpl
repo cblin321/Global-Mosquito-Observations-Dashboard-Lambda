@@ -1,11 +1,11 @@
-<h1><i class="fa fa-table"></i>Data</h1>
+<h1><i class="fa fa-users"></i>How To Participate</h1>
 
 <ol class="breadcrumb">
 	<li><a href=""><i class="fa fa-home"></i>Home</a></li>
-	<li><i class="fa fa-table"></i>Data</li>
+	<li><i class="fa fa-table"></i>How To Participate</li>
 </ol>
 
-<p>This dashboard integrates mosquito observation data from various citizen science platforms including: </p>
+<p>If you'd like to become a citizen scientist, you can contribute your own data to this dashboard.  This dashboard integrates mosquito observation data from the citizen science platforms listed below.  To add your own data, click on one of the links below, create an account, and then start contributing your own observations. </p>
 
 <div style="display:flex; margin:30px 0">
 	<div>

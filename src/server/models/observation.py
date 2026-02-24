@@ -37,11 +37,11 @@ class Observation(Model):
 	#
 
 	@staticmethod
-	def to_value(key, data):
+	def to_value(key: str, data: object):
 		return data
 
 	@staticmethod
-	def to_values(data):
+	def to_values(data: object):
 		fields = {}
 		count = 0
 		for key in Observation.fields:
@@ -54,21 +54,21 @@ class Observation(Model):
 	#
 
 	@staticmethod
-	def to_int(string):
+	def to_int(string: str):
 		return int(string)
 
 	@staticmethod
-	def to_float(string):
+	def to_float(string: str):
 		return float(string)
 
 	@staticmethod
-	def to_urls(string):
+	def to_urls(string: str):
 		if string == 'None':
 			return []
 		return string.split(';') if string else []
 
 	@staticmethod
-	def to_object(string):	
+	def to_object(string: str):	
 		if (string):
 			try:
 				return ast.literal_eval(string)
@@ -79,7 +79,7 @@ class Observation(Model):
 		else:
 			return None
 
-	def to_object2(string):	
+	def to_object2(string: str):	
 		if (string):
 			try:
 				return json.loads(string)

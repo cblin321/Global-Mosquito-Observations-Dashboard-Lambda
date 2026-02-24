@@ -33,6 +33,10 @@ $mosquito-alert-fill-color: #89373a;
 $mosquito-alert-stroke-color: #e8bec0;
 $mosquito-alert-cluster-color: coloring.faded($mosquito-alert-fill-color, 75%);
 
+$digitomy-fill-color: #5b3b01;
+$digitomy-stroke-color: #5b3b01;
+$digitomy-cluster-color: coloring.faded($digitomy-fill-color, 75%);
+
 //
 // observation markers
 //
@@ -186,6 +190,24 @@ div.marker {
 	&.cluster {
 		background-color: $mosquito-alert-cluster-color;
 		border-color: $mosquito-alert-stroke-color;
+	}
+}
+
+.digitomy {
+	i {
+		color: $digitomy-fill-color;
+	}
+	&.marker {
+		fill: $digitomy-fill-color;
+		stroke: $digitomy-stroke-color;
+	}
+	&.marker, .swatch {
+		background-color: $digitomy-fill-color;
+		border-color: $digitomy-stroke-color;
+	}
+	&.cluster {
+		background-color: $digitomy-cluster-color;
+		border-color: $digitomy-stroke-color;
 	}
 }
 

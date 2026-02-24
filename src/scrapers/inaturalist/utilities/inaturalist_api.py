@@ -20,7 +20,7 @@ import json
 import sys
 import math
 
-sys.path.insert(0, '../../translation/inaturalist') 
+sys.path.insert(0, '../../translators/inaturalist') 
 from utilities.json_translator import iNaturalistTranslator
 
 class iNaturalistAPI:
@@ -150,21 +150,29 @@ class iNaturalistAPI:
 
 		# check for a response
 		#
-		if response is None:
+		if response is None or response.text is None:
 			print("No results returned from API.")
+			return []
+
+		if not response.text.startswith('{'):
+			print "Error:", response.text
 			return []
 
 		# parse response
 		#
-		results = json.loads(response.text)
+		try:
+			results = json.loads(response.text)
 
-		# parse observations
-		#
-		observations = results['results'] if 'results' in results else []
+			# parse observations
+			#
+			observations = results['results'] if 'results' in results else []
 
-		# transform data
-		#
-		return iNaturalistTranslator().translate_observations(observations)
+			# transform data
+			#
+			return iNaturalistTranslator().translate_observations(observations)
+		except:
+			print("JSON Error:", reponse.text)
+			return []
 
 	@staticmethod
 	def fetch_data(start_date, end_date):

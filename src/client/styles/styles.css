@@ -1210,6 +1210,22 @@ div.marker {
   border-color: #e8bec0;
 }
 
+.digitomy i {
+  color: #5b3b01;
+}
+.digitomy.marker {
+  fill: #5b3b01;
+  stroke: #5b3b01;
+}
+.digitomy.marker, .digitomy .swatch {
+  background-color: #5b3b01;
+  border-color: #5b3b01;
+}
+.digitomy.cluster {
+  background-color: rgba(91, 59, 1, 0.75);
+  border-color: #5b3b01;
+}
+
 .hide-habitat-mapper .habitat-mapper {
   display: none !important;
 }

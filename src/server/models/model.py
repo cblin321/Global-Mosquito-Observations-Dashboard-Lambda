@@ -31,7 +31,7 @@ class Model:
 	# constructor
 	#
 
-	def __init__(self, attributes):
+	def __init__(self, attributes: object):
 
 		"""
 		Creates a new model with the specified attributes.
@@ -48,7 +48,7 @@ class Model:
 	# querying methods
 	#
 
-	def has(self, attribute):
+	def has(self, attribute: str):
 
 		"""
 		Tests if this model has this attribute.
@@ -59,7 +59,7 @@ class Model:
 
 		return attribute in self.attributes and self.attributes[attribute] != None and self.attributes[attribute] != ''
 
-	def exists(self, db):
+	def exists(self, db: object):
 
 		"""
 		Tests whether this model exists in the database.
@@ -72,7 +72,7 @@ class Model:
 
 		return self.has('id') and self.find(db) != None
 
-	def find(self, db):
+	def find(self, db: object):
 
 		"""
 		Finds this model in the database.
@@ -99,7 +99,7 @@ class Model:
 	# getting methods
 	#
 
-	def get(self, attribute):
+	def get(self, attribute: str):
 
 		"""
 		Gets this model's attribute.
@@ -118,7 +118,7 @@ class Model:
 	# setting methods
 	#
 
-	def set(self, key, value):
+	def set(self, key: str, value):
 
 		"""
 		Sets one of this model's attributes.
@@ -133,7 +133,7 @@ class Model:
 		self.attributes[key] = value
 		return self
 
-	def set_all(self, attributes):
+	def set_all(self, attributes: object):
 
 		"""
 		Sets all of this model's attributes.
@@ -171,7 +171,7 @@ class Model:
 	# saving methods
 	#
 
-	def save(self, db):
+	def save(self, db: object):
 
 		"""
 		Stores this model in the database.
@@ -195,7 +195,7 @@ class Model:
 		else:
 			self.update(db)
 
-	def insert(self, db):
+	def insert(self, db: object):
 
 		"""
 		Inserts this model in the database.
@@ -251,7 +251,7 @@ class Model:
 		#
 		self.set('id', cursor.lastrowid)
 
-	def update(self, db, attributes = None):
+	def update(self, db: object, attributes: object = None):
 
 		"""
 		Updates this model in the database.
@@ -291,7 +291,7 @@ class Model:
 		cursor.execute(query)
 		db.commit()
 
-	def update_not_null(self, db):
+	def update_not_null(self, db: object):
 
 		"""
 		Updates this model in the database.
@@ -348,7 +348,7 @@ class Model:
 	# deleting methods
 	#
 
-	def delete(self, db):
+	def delete(self, db: object):
 
 		"""
 		Deletes this model from the database.

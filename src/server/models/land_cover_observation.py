@@ -122,7 +122,7 @@ class LandCoverObservation(Observation):
 	# constructor
 	#
 
-	def __init__(self, attributes = {}):
+	def __init__(self, attributes: object = {}):
 
 		"""
 		Creates a new model with the specified attributes.
@@ -141,7 +141,7 @@ class LandCoverObservation(Observation):
 	#
 
 	@staticmethod
-	def to_value(key, data):
+	def to_value(key: str, data: object):
 		if key in LandCoverObservation.casts['ints']:
 			return Observation.to_int(data)
 		elif key in LandCoverObservation.casts['objects2']:
@@ -150,7 +150,7 @@ class LandCoverObservation(Observation):
 			return data
 
 	@staticmethod
-	def to_values(data):
+	def to_values(data: object):
 		fields = {}
 		count = 0
 		for key in LandCoverObservation.fields:

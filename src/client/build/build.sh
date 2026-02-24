@@ -1,7 +1,7 @@
 # define directories
 #
-src=../../mosquito-map
-dest=../../mosquito-map-built
+src=../../mosquito-dashboard
+dest=../../mosquito-dashboard-built
 
 #
 # functions

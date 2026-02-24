@@ -9,7 +9,7 @@ export default {
 
 	output: {
 		format: 'es',
-		dir: '../../mosquito-map-built/scripts',
+		dir: '../../mosquito-dashboard-built/scripts',
 		inlineDynamicImports: false,
 		chunkFileNames: '[name].js'
 	},
