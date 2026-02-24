@@ -30,6 +30,7 @@ The Global Mosquito Dashboard integrates data from a number of external data sou
 - [GLOBE Land Cover](https://observer.globe.gov/do-globe-observer/land-cover)
 - [iNaturalist](https://www.inaturalist.org)
 - [Mosquito Alert](https://www.mosquitoalert.com)
+- [USF Digitomy Traps](https://www.usf.edu)
 
 ### Viewing
 - View locations of mosquito observations on a map.
