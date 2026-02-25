@@ -61,13 +61,20 @@ export default BaseMapView.extend(_.extend({}, ObservationPopups, {
 		}
 	},
 
-	sources: [
-		'habitat_mapper',
-		'land_cover',
-		'inaturalist',
-		'mosquito_alert',
-		'digitomy'
-	],
+	//
+	// constructor
+	//
+
+	initialize: function() {
+
+		// call superclass constructor
+		//
+		BaseMapView.prototype.initialize.call(this);
+
+		// set attributes
+		//
+		this.sources = defaults.sources;
+	},
 
 	//
 	// ajax methods

@@ -23,6 +23,14 @@
 		}
 	},
 
+	"sources": [
+		"habitat_mapper",
+		"land_cover",
+		"inaturalist",
+		"mosquito_alert",
+		"digitomy"
+	],
+
 	"leaflet": {
 		"inertia": true,
 		"inertiaDeceleration": 500,
