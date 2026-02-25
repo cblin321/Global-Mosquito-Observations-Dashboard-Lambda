@@ -238,8 +238,10 @@ export default {
 	},
 
 	getDigitomyPopupData: function(data) {
-		let root = 'images/observations/digitomy/'
+		let root = 'images/observations/digitomy/';
+		let stickypadRoot = root + 'stickypad/';
 		let url = root + data.mosquito_gcs_url.split('/').at(-1);
+		let stickypadUrl = stickypadRoot + data.stickypad_gcs_url.split('/').at(-1).replace('processed_', '');
 
 		return {
 			title: 'Digitomy',
@@ -248,8 +250,8 @@ export default {
 				time: new Date(data.captured_at).toTimeString(),
 				site: this.toLocation(data.location),
 				location: [data.y.toPrecision(6), data.x.toPrecision(6)],
-				thumb_urls: [url],
-				photo_urls: [url]
+				thumb_urls: [url, stickypadUrl],
+				photo_urls: [url, stickypadUrl]
 			}
 		}
 	},
