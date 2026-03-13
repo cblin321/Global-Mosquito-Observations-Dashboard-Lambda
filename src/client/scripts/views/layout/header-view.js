@@ -23,7 +23,7 @@ export default BaseView.extend({
 	className: 'navbar navbar-expand-lg fixed-top',
 
 	template: _.template(`
-		<a id="brand" href="#" id="brand" class="active navbar-brand">
+		<a id="brand" class="active navbar-brand" href="#">
 			<img class="logo" src="<%= defaults.navbar.icon %>" />
 			<%= defaults.navbar.title %>
 		</a>
@@ -34,7 +34,7 @@ export default BaseView.extend({
 			<% for (let i = 0; i < keys.length; i++) { %>
 			<% let key = keys[i]; %>
 			<% let item = defaults.navbar.navs[key]; %>
-			<li class="<%= key %><% if (nav == key) {%> active <% } %>">
+			<li class="<%= key %><% if (nav === key) {%> active <% } %>">
 				<a href="<%= item.href %>"<% if (item.color) { %> style="--primary-color:<%= item.color %>"<% } %>>
 					<i class="<%= item.icon %>"></i>
 					<span class="hidden-xs"><%= item.text %></span>

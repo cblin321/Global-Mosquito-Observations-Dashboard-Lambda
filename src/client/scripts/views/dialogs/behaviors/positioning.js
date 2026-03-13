@@ -22,7 +22,7 @@ export default {
 	//
 
 	isFixed: function() {
-		return this.$el.find('.modal-dialog').css('position') == 'absolute';
+		return this.$el.find('.modal-dialog').css('position') === 'absolute';
 	},
 
 	//

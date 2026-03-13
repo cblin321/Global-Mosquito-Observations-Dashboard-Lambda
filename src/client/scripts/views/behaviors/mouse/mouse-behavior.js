@@ -31,16 +31,16 @@ function MouseBehavior(element, options) {
 	if (!options) {
 		options = {};
 	}
-	if (options.on == undefined) {
+	if (options.on === undefined) {
 		options.on = true;
 	}
-	if (options.cursor == undefined) {
+	if (options.cursor === undefined) {
 		options.cursor = this.cursor;
 	}
-	if (options.button == undefined) {
+	if (options.button === undefined) {
 		options.button = 1;
 	}
-	if (options.blocking == undefined) {
+	if (options.blocking === undefined) {
 		options.blocking = this.blocking;
 	}
 	
@@ -85,7 +85,7 @@ MouseBehavior.prototype = _.extend({}, MouseBehavior.prototype, {
 
 	addMouseEventHandlers: function() {
 		this.mouseDownHandler = (event) => {
-			if (event.which != this.button) {
+			if (event.which !== this.button) {
 				return;
 			}
 			
@@ -103,7 +103,7 @@ MouseBehavior.prototype = _.extend({}, MouseBehavior.prototype, {
 		};
 
 		this.mouseUpHandler = (event) => {
-			if (event.which != this.button) {
+			if (event.which !== this.button) {
 				return;
 			}
 
@@ -126,7 +126,7 @@ MouseBehavior.prototype = _.extend({}, MouseBehavior.prototype, {
 
 			// check if single or multi touch event
 			//
-			if (event.touches.length != this.button) {
+			if (event.touches.length !== this.button) {
 				return;
 			}
 

@@ -38,7 +38,7 @@ MouseDragBehavior.prototype = _.extend({}, MouseBehavior.prototype, {
 
 	addMouseEventHandlers: function() {
 		this.mouseDownHandler = (event) => {
-			if (event.which != this.button) {
+			if (event.which !== this.button) {
 				return;
 			}
 
@@ -75,7 +75,7 @@ MouseDragBehavior.prototype = _.extend({}, MouseBehavior.prototype, {
 		};
 
 		this.mouseDragHandler = (event) => {
-			if (event.which != this.button) {
+			if (event.which !== this.button) {
 				return;
 			}
 
@@ -93,7 +93,7 @@ MouseDragBehavior.prototype = _.extend({}, MouseBehavior.prototype, {
 		};
 
 		this.mouseUpHandler = (event) => {
-			if (event.which != this.button) {
+			if (event.which !== this.button) {
 				return;
 			}
 
@@ -133,13 +133,13 @@ MouseDragBehavior.prototype = _.extend({}, MouseBehavior.prototype, {
 
 			// check if single or multi touch event
 			//
-			if (event.touches.length != this.button) {
+			if (event.touches.length !== this.button) {
 				return;
 			}
 
 			// set start and current locations
 			//
-			if (this.button == 2) {
+			if (this.button === 2) {
 				this.start = this.getTouchLocation(event, 0);
 				this.current = this.getTouchLocation(event, 1);
 			} else {
@@ -169,13 +169,13 @@ MouseDragBehavior.prototype = _.extend({}, MouseBehavior.prototype, {
 
 			// check if single or multi touch event
 			//
-			if (event.touches.length != this.button) {
+			if (event.touches.length !== this.button) {
 				return;
 			}
 
 			// update start and current locations
 			//
-			if (this.button == 2) {
+			if (this.button === 2) {
 				this.start = this.getTouchLocation(event, 0);
 				this.current = this.getTouchLocation(event, 1);
 			} else {
@@ -218,7 +218,7 @@ MouseDragBehavior.prototype = _.extend({}, MouseBehavior.prototype, {
 	//
 
 	isDragged: function() {
-		return this.start && (this.start != this.current);
+		return this.start && (this.start !== this.current);
 	},
 
 	//

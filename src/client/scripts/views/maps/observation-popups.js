@@ -18,8 +18,10 @@
 import QueryString from '../../utilities/web/query-string.js';
 import ShareDialogView from '../../views/dialogs/share-dialog-view.js';
 import Browser from '../../utilities/web/browser.js';
+import PopupData from '../../views/maps/popup-data.js';
+import { toTitleCase} from '../../utilities/scripting/string-utils.js';
 
-export default {
+export default _.extend({}, PopupData, {
 
 	//
 	// attributes
@@ -34,9 +36,9 @@ export default {
 		</div>
 		<% for (i = 0; i < keys.length; i++) { %>
 		<% let key = keys[i]; %>
-		<% let label = keys[i].toTitleCase().replace(/_/g, ' '); %>
+		<% let label = toTitleCase((keys[i].replace(/_/g, ' '))); %>
 		<% let value = attributes[key]; %>
-		<% if (value && value != 'None' && key != 'photo_urls' && key != 'thumb_urls' && key != 'captions') { %>
+		<% if (value && value !== 'None' && key !== 'photo_urls' && key !== 'thumb_urls' && key !== 'captions') { %>
 		<div class="value">
 			<label><%= label %>:</label>
 			<%= value %>
@@ -46,18 +48,35 @@ export default {
 		<% if (attributes.thumb_urls && attributes.photo_urls.length > 0) { %>
 		<hr />
 		<div class="photos">
-			<% for (let i = 0; i < attributes.photo_urls.length; i++) { %>
-			<% let photo_url = attributes.photo_urls[i]; %>
-			<% let thumb_url = attributes.thumb_urls[i]; %>
-			<% let caption = attributes.captions? attributes.captions[i] : null; %>
-			<% if (thumb_url) { %>
-			<div class="photo">
-				<a style="background-image: url('<%= thumb_url %>');" href="<%= photo_url %>" data-fancybox="gallery" class="lightbox"<% if (caption) { %> data-caption="<%= caption %>"<% } %>>
-					<!-- <img class="preview" src="<%= thumb_url %>" /> -->
-				</a>
-				<% if (caption) { %><label><%= caption %></label><% } %>
-			</div>
+			<% if (source == 'digitomy') { %>
+			<div class="group">
 			<% } %>
+				<% for (let i = 0; i < attributes.photo_urls.length; i++) { %>
+				<% let photo_url = attributes.photo_urls[i]; %>
+				<% let thumb_url = attributes.thumb_urls[i]; %>
+				<% let caption = attributes.captions? attributes.captions[i] : null; %>
+				<% if (thumb_url) { %>
+				<div class="photo">
+					<a href="<%= photo_url %>" data-fancybox="gallery" class="lightbox"<% if (caption) { %> data-caption="<%= caption %>"<% } %>>
+						<div class="preview">
+							<img src="<%= thumb_url %>" />
+							<% if (caption && caption.startsWith('Stickypad')) { %>
+							<div class="bounding-box" style="
+								left:<%= bounding_box.left %>px;
+								top:<%= bounding_box.top %>px;
+								width:<%= bounding_box.width %>px;
+								height:<%= bounding_box.height %>px"
+							></div>
+							<% } %>
+						</div>
+					</a>
+					<% if (caption) { %><label><%= caption %></label><% } %>
+				</div>
+				<% } %>
+				<% if (i == 1 && source == 'digitomy') { %></div><div class="group"><% } %>
+				<% } %>
+			<% if (source == 'digitomy') { %>
+			</div>
 			<% } %>
 		</div>
 		<% } %>
@@ -68,14 +87,14 @@ export default {
 	//
 
 	formatName: function(name) {
-		if (!name || name.length == 0) {
+		if (!name || name.length === 0) {
 			return name;
 		}
 
 		let terms = name.split(' ');
 		for (let i = 0; i < terms.length; i++) {
 			let term = terms[i];
-			if (term.toLowerCase() != 'insecta' && !term.endsWith('dae')) {
+			if (term.toLowerCase() !== 'insecta' && !term.endsWith('dae')) {
 				terms[i] = '<i>' + term + '</i>';
 			}
 		}
@@ -134,6 +153,25 @@ export default {
 	},
 
 	//
+	// getting methods
+	//
+
+	getBoundingBox: function(data) {
+		let xsize = 8000;
+		let ysize = 6000;
+		let size = 100;
+		if (!data) {
+			return;
+		}
+		return {
+			left: Math.round(data.x1 / xsize * size),
+			top: Math.round(data.y1 / ysize * size),
+			width: Math.round((data.x2 - data.x1) / xsize * size),
+			height: Math.round((data.y2 - data.y1) / ysize * size)
+		}
+	},
+
+	//
 	// popup methods
 	//
 
@@ -141,140 +179,20 @@ export default {
 		let keys = Object.keys(object);
 		for (let i = 0; i < keys.length; i++) {
 			let key = keys[i];
-			if (object[key] != null) {
+			if (object[key] !== null) {
 				return true;
 			}
 		}
 		return false;
 	},
 
-	getHabitatMapperPopupData: function(data) {
-		return {
-			title: 'Habitat Mapper',
-			attributes: {
-				date: new Date(data.mhm_measuredDate).toLocaleDateString(),
-				time: new Date(data.mhm_measuredDate).toTimeString(),
-				site: data.mhm_siteName,
-				genus: this.formatName(data.mhm_Genus),
-				species: this.formatName(data.mhm_Species),
-				location: this.toLocation(data),
-				habitat_type: data.mhm_WaterSourceType,
-				habitat: data.mhm_WaterSource,
-				thumb_urls: data.mhm_LarvaFullBodyPhotoUrls.concat(data.mhm_WaterSourcePhotoUrls),
-				photo_urls: data.mhm_LarvaFullBodyPhotoUrls.concat(data.mhm_WaterSourcePhotoUrls)
-			}
-		};
-	},
-
-	getiNaturalistPopupData: function(data) {
-		return {
-			title: 'iNaturalist',
-			attributes: {
-				date: new Date(data.observationResCatObsPheTime).toLocaleDateString(),
-				time: new Date(data.observationResCatObsPheTime).toTimeString(),
-				location: this.toLocation(data),
-				genus: this.formatName(data.Indentified_by_Human),
-				common_name: data.ObsCPCommonName,
-				thumb_urls: data.observationImaImaResult.map((result) => {
-					return result.photo.url
-				}),
-				photo_urls: data.observationImaImaResult.map((result) => {
-					return result.photo.url.replace('square', 'original');
-				})
-			}
-		};
-	},
-
-	getLandCoverPopupData: function(data) {
-		return {
-			title: 'Land Cover',
-			attributes: {
-				date: new Date(data.phenomenonTime).toLocaleDateString(),
-				time: new Date(data.phenomenonTime).toTimeString(),
-				location: this.toLocation(data),
-				thumb_urls: data.imageResult && this.hasNonNullObject(data.imageResult)? [
-					data.imageResult.lc_NorthPhotoUrl,
-					data.imageResult.lc_SouthPhotoUrl,
-					data.imageResult.lc_EastPhotoUrl,
-					data.imageResult.lc_WestPhotoUrl,
-					data.imageResult.lc_UpwardPhotoUrl,
-					data.imageResult.lc_DownwardPhotoUrl
-				] : [],
-				photo_urls: data.imageResult && this.hasNonNullObject(data.imageResult)? [
-					data.imageResult.lc_NorthPhotoUrl,
-					data.imageResult.lc_SouthPhotoUrl,
-					data.imageResult.lc_EastPhotoUrl,
-					data.imageResult.lc_WestPhotoUrl,
-					data.imageResult.lc_UpwardPhotoUrl,
-					data.imageResult.lc_DownwardPhotoUrl
-				] : [],
-				captions: [
-					"North",
-					"South",
-					"East",
-					"West",
-					"Up",
-					"Down"
-				]
-			}
-		};
-	},
-
-	getMosquitoAlertPopupData: function(data) {
-		return {
-			title: 'Mosquito Alert',
-			attributes: {
-				date: new Date(data.observationResCatObsPheTime).toLocaleDateString(),
-				time: new Date(data.observationResCatObsPheTime).toTimeString(),
-				site: data.locationName,
-				location: this.toLocation(data),
-				species: this.formatName(data.Indentified_by_Human),
-				'adult, bite, or site': data.dataStreamDescription,
-				research_grade: data.omPrcoessResQuaQuaGrade,
-				thumb_urls: data.observationImaImaResult? [data.observationImaImaResult] : null,
-				photo_urls: data.observationImaImaResult? [data.observationImaImaResult] : null
-			}
-		}
-	},
-
-	getDigitomyPopupData: function(data) {
-		let root = 'images/observations/digitomy/';
-		let stickypadRoot = root + 'stickypad/';
-		let url = root + data.mosquito_gcs_url.split('/').at(-1);
-		let stickypadUrl = stickypadRoot + data.stickypad_gcs_url.split('/').at(-1).replace('processed_', '');
-
-		return {
-			title: 'Digitomy',
-			attributes: {
-				date: new Date(data.captured_at).toLocaleDateString(),
-				time: new Date(data.captured_at).toTimeString(),
-				site: this.toLocation(data.location),
-				location: [data.y.toPrecision(6), data.x.toPrecision(6)],
-				thumb_urls: [url, stickypadUrl],
-				photo_urls: [url, stickypadUrl]
-			}
-		}
-	},
-
-	getPopupData: function(source, data) {
-		switch (source) {
-			case 'habitat_mapper':
-				return this.getHabitatMapperPopupData(data);
-			case 'inaturalist':
-				return this.getiNaturalistPopupData(data);
-			case 'land_cover':
-				return this.getLandCoverPopupData(data);
-			case 'mosquito_alert':
-				return this.getMosquitoAlertPopupData(data);
-			case 'digitomy':
-				return this.getDigitomyPopupData(data);
-			default:
-				alert("Unknown data source.")
-		}
-	},
-
 	showMarkerPopup: function(marker, data) {
-		let html = this.popupTemplate(this.getPopupData(marker.options.source, data));
+		let html = this.popupTemplate(_.extend({},
+			this.getPopupData(marker.options.source, data), {
+				toTitleCase: toTitleCase,
+				bounding_box: this.getBoundingBox(data)
+			}
+		));
 
 		// select marker
 		//
@@ -340,4 +258,4 @@ export default {
 			}
 		});
 	}
-}
+});

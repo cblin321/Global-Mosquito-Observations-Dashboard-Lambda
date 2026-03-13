@@ -72,12 +72,12 @@ function getDevice() {
 }
 
 function isTouchEnabled() {
-	return (getDevice() != 'desktop') || window.PointerEvent && navigator.maxTouchPoints > 1;
+	return (getDevice() !== 'desktop') || window.PointerEvent && navigator.maxTouchPoints > 1;
 }
 
 function isMobile() {
 	let device = getDevice();
-	return device == 'phone' || device == 'tablet';
+	return device === 'phone' || device === 'tablet';
 }
 
 //
@@ -157,7 +157,7 @@ export default {
 		navigator.userAgent.indexOf('.NET') > -1,
 	is_chrome: navigator.userAgent.indexOf('Chrome') > -1,
 	is_firefox: navigator.userAgent.indexOf('Firefox') > -1,
-	is_safari: navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf('Chrome') == -1,
+	is_safari: navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf('Chrome') === -1,
 
 	//
 	// browser security querying methods
@@ -187,13 +187,13 @@ export default {
 
 					case 'x-frame-options':
 						value = value.toLowerCase();
-						if (value == 'sameorigin' || value == 'deny') {
+						if (value === 'sameorigin' || value === 'deny') {
 							return false;
 						}
 						break;
 
 					case 'access-control-allow-origin':
-						if (value != '*' && value != '') {
+						if (value !== '*' && value !== '') {
 							return false;
 						}
 						break;

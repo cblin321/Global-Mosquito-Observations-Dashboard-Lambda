@@ -33,7 +33,7 @@ let dateFormat = function () {
         date = date ? new Date(date) : new Date();
         if (isNaN(date)) throw SyntaxError("invalid date");
         // Convert to local time
-        if (utc != false && date.getTimezoneOffset()) {
+        if (utc !== false && date.getTimezoneOffset()) {
             date = new Date(date.getTime() - (new Date()).getTimezoneOffset() * 60 * 1000);
         }
         mask = String(dF.masks[mask] || mask || dF.masks["default"]);

@@ -136,7 +136,7 @@ export default ToolbarView.extend({
 	},
 
 	setMode: function(mapMode) {
-		if (this.getMapMode() != mapMode) {
+		if (this.getMapMode() !== mapMode) {
 			this.setMapMode(mapMode);
 		}
 	},
@@ -218,7 +218,7 @@ export default ToolbarView.extend({
 	updateQueryString: function() {
 		let mapMode = this.getMapMode();
 
-		if (mapMode != 'map') {
+		if (mapMode !== 'map') {
 			QueryString.add('mode', mapMode);
 		} else {
 			QueryString.remove('mode');
@@ -263,7 +263,7 @@ export default ToolbarView.extend({
 
 	addQueryParams: function(params) {
 		let mode = this.getMapMode();
-		if (mode != 'map') {
+		if (mode !== 'map') {
 			params.set('mode', mode);
 		}
 		return params;
@@ -285,7 +285,7 @@ export default ToolbarView.extend({
 
 		// set initial marker visibility
 		//
-		if (QueryString.value('markers') != 'false') {
+		if (QueryString.value('markers') !== 'false') {
 			this.toggleShowMarkers();
 		} else {
 			this.setShowMarkers(false);

@@ -60,7 +60,7 @@ export default BaseView.extend({
 	//
 
 	getSelectedIndices: function() {
-		if (this.$el.find('input:not(:checked').length == 0) {
+		if (this.$el.find('input:not(:checked').length === 0) {
 			return null;
 		}
 

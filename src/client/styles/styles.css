@@ -1259,8 +1259,8 @@ div.marker {
 |     Copyright (C) 2025, Data Science Institute, University of Wisconsin      |
 \******************************************************************************/
 .leaflet-container .leaflet-popup-content {
-  width: 100%;
-  max-height: 420px;
+  width: 320px !important;
+  max-height: 600px;
   overflow: auto;
 }
 .leaflet-container .leaflet-popup-content .title {
@@ -1277,28 +1277,41 @@ div.marker {
   float: right;
 }
 .leaflet-container .leaflet-popup-content .photos {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   width: 100%;
   text-align: center;
 }
+.leaflet-container .leaflet-popup-content .photos .group {
+  display: flex;
+}
 .leaflet-container .leaflet-popup-content .photos .photo {
   display: inline-flex;
+  width: 100px;
   position: relative;
   flex-direction: column;
-  margin: 0;
+  margin: 2px;
 }
-.leaflet-container .leaflet-popup-content .photos .photo a {
-  width: 90px;
-  height: 90px;
-  background-position: center;
-  background-size: cover;
+.leaflet-container .leaflet-popup-content .photos .photo .preview {
+  display: flex;
+  width: 100px;
+  height: 100px;
+  background: black;
+  border: 1px solid white;
+}
+.leaflet-container .leaflet-popup-content .photos .photo .preview img {
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+}
+.leaflet-container .leaflet-popup-content .photos .photo .bounding-box {
+  position: absolute;
+  outline: 2px solid red;
 }
 .leaflet-container .leaflet-popup-content .photos .photo label {
-  position: absolute;
   text-align: center;
   padding: 0 5px;
-  background: black;
-  color: white;
 }
 .leaflet-container .leaflet-popup-content-wrapper {
   border-radius: 0;
@@ -1324,6 +1337,9 @@ div.marker {
 .dark .leaflet-popup-content-wrapper, .dark .leaflet-popup-tip {
   color: white;
   background: rgb(51.5, 51.5, 51.5);
+}
+.dark .leaflet-popup-content-wrapper .photo label, .dark .leaflet-popup-tip .photo label {
+  color: white;
 }
 
 /******************************************************************************\

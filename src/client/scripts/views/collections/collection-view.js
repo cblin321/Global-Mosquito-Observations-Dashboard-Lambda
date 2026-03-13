@@ -47,7 +47,7 @@ export default Marionette.CollectionView.extend(_.extend({}, Hierarchical, {
 	//
 
 	isEmpty: function() {
-		return this.children.length == 0;
+		return this.children.length === 0;
 	},
 
 	numChildren: function() {
@@ -62,7 +62,7 @@ export default Marionette.CollectionView.extend(_.extend({}, Hierarchical, {
 		for (let i = 0; i < this.children.length; i++) {
 			let child = this.children.findByIndex(i);
 			if (!filter || filter(child)) {
-				if (callback(child, options) == false) {
+				if (callback(child, options) === false) {
 					break;
 				}
 			}
@@ -90,7 +90,7 @@ export default Marionette.CollectionView.extend(_.extend({}, Hierarchical, {
 	},
 
 	hasChildViewAt: function(index) {
-		return this.children.findByIndex(index) != null;
+		return this.children.findByIndex(index) !== null;
 	},
 
 	//

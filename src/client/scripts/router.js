@@ -44,7 +44,7 @@ export default Backbone.Router.extend({
 	//
 
 	showWelcome: function() {
-		if (Browser.is_mobile && window.location.search == '') {
+		if (Browser.is_mobile && window.location.search === '') {
 			this.showHome();
 		} else {
 			this.showMain();
@@ -76,7 +76,7 @@ export default Backbone.Router.extend({
 			application.show(new BaseView({
 				template: _.template(text)
 			}), {
-				nav: address.contains('/')? address.split('/')[0] : address
+				nav: address.includes('/')? address.split('/')[0] : address
 			});
 		});
 	},

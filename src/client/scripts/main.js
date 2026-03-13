@@ -32,29 +32,23 @@ import '../vendor/popper/popper.min.js';
 Promise.all([
 	fetch('config/config.json').then(response => response.json()),
 	fetch('config/defaults.json').then(response => response.json()),
-]).then((files) => {
-	window.config = files[0];
-	window.defaults = files[1];
-	window.community_defaults = {};
+]).then(([config, defaults]) => {
 
 	// set web page title
 	//
-	if (window.defaults.navbar.title) {
-		document.title = window.defaults.navbar.title;
+	if (defaults.navbar.title) {
+		document.title = defaults.navbar.title;
 	}
 
 	function start() {
 		$(document).ready(() => {
 			import('./application.js').then((Application) => {
-
-				// set global for future reference
-				//
-				application = new Application.default();
+				const app = new Application.default({ config, defaults });
 
 				// go!
 				//
 				$(document).ready(function() {
-					application.start();
+					app.start();
 				});
 			});
 		});

@@ -15,22 +15,22 @@
 |     Copyright (C) 2025, Data Science Institute, University of Wisconsin      |
 \******************************************************************************/
 
-Array.prototype.clone = function() {
-	return this.slice(0);
-};
+export function clone(array) {
+	return array.slice(0);
+}
 
-Array.prototype.remove = function(item) {
-	let index = this.indexOf(item);
-	if (index != -1) {
-		this.splice(index, 1);
-	}
-	return this;
-};
-
-Array.prototype.removeAll = function(items) {
-	let array = this.clone();
-	for (let i = 0; i < items.length; i++) {
-		array = array.remove(items[i]);
+export function remove(array, item) {
+	let index = array.indexOf(item);
+	if (index !== -1) {
+		array.splice(index, 1);
 	}
 	return array;
-};
+}
+
+export function removeAll(array, items) {
+	let result = clone(array);
+	for (let i = 0; i < items.length; i++) {
+		result = remove(result, items[i]);
+	}
+	return result;
+}

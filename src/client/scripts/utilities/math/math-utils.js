@@ -38,11 +38,11 @@ Math.randomInt = function(min, max) {
 };
 
 Math.even = function(number) {
-	return number % 2 == 0;
+	return number % 2 === 0;
 };
 
 Math.odd = function(number) {
-	return number % 2 == 1;
+	return number % 2 === 1;
 };
 
 //

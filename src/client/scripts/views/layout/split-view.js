@@ -18,9 +18,9 @@
 import BaseView from '../../views/base-view.js';
 import Browser from '../../utilities/web/browser.js';
 import Split from '../../../vendor/splitjs/src/split.js';
-import '../../utilities/scripting/array-utils.js';
+import SidebarResizable from '../../views/behaviors/layout/sidebar-resizable.js';
 
-export default BaseView.extend({
+export default BaseView.extend(_.extend({}, SidebarResizable, {
 
 	//
 	// attributes
@@ -64,7 +64,7 @@ export default BaseView.extend({
 
 		// set attributes
 		//
-		if (this.options.orientation != undefined) {
+		if (this.options.orientation !== undefined) {
 			this.orientation = this.options.orientation;
 		}
 		if (this.options.sizes) {
@@ -80,47 +80,7 @@ export default BaseView.extend({
 				this.sizes = [100 - this.options.sidebar_size, this.options.sidebar_size];
 			}
 		}
-		this.initialSizes = this.sizes.clone();
-	},
-
-	//
-	// querying methods
-	//
-
-	isSideBarVisible: function() {
-		return this.$el.find('> .sidebar').is(':visible');
-	},
-
-	isSideBarHidden: function() {
-		return this.splitter.hidden;
-	},
-
-	isSideBarOpen: function() {
-		if (!this.flipped) {
-			return this.getSizes()[0] > this.getGutterSize();
-		} else {
-			return this.getSizes()[1] > this.getGutterSize();
-		}
-	},
-
-	//
-	// getting methods
-	//
-
-	getGutterSize: function() {
-		return Browser.is_mobile? this.mobile_gutter_size : this.gutter_size;
-	},
-
-	getSizes: function() {
-		return this.splitter.getSizes();
-	},
-
-	getInitialSideBarSize: function() {
-		if (!this.flipped) {
-			return this.initialSizes[0] || 50;
-		} else {
-			return this.initialSizes[1] || 50;
-		}
+		this.initialSizes = [...this.sizes];
 	},
 
 	//
@@ -144,148 +104,6 @@ export default BaseView.extend({
 			case 'vertical':
 				this.$el.find('> .split').removeClass('split-horizontal').addClass('split-vertical');
 				break;
-		}		
-	},
-
-	setSideBarSize: function(sidebarSize) {
-
-		// compute sizes
-		//
-		if (this.flipped) {
-			this.sizes = [(100 - sidebarSize), sidebarSize];
-		} else {
-			this.sizes = [sidebarSize, (100 - sidebarSize)];
-		}
-
-		// set pane sizes
-		//
-		this.splitter.setSizes(this.sizes);
-		this.adjustSizes();
-		this.onResize();
-	},
-
-	setSideBarMinSize: function(sidebarMinSize) {
-		this.setMinSizes([sidebarMinSize, 0]);
-	},
-
-	setMinSizes: function(minSizes) {
-		if (minSizes[0]) {
-			switch (this.orientation) {
-				case 'horizontal':
-					this.$el.find('.sidebar').css('min-width', minSizes[0] + 'px');
-					break;
-				case 'vertical':
-					this.$el.find('.sidebar').css('min-height', minSizes[0] + 'px');
-					break;
-			}
-		}
-		if (minSizes[1]) {
-			switch (this.orientation) {
-				case 'horizontal':
-					this.$el.find('.mainbar').css('min-width', minSizes[1] + 'px');
-					break;
-				case 'vertical':
-					this.$el.find('.mainbar').css('min-height', minSizes[1] + 'px');
-					break;
-			}	
-		}
-	},
-
-	setSideBarVisibility: function(visibility) {
-		if (visibility) {
-			this.showSideBar();
-		} else {
-			this.hideSideBar();
-		}
-	},
-	
-	resetSideBar: function() {
-		this.splitter.setSizes(this.options.sizes || this.sizes);
-		this.onResize();
-	},
-
-	//
-	// converting methods
-	//
-
-	pixelsToPercent: function(sizes) {
-
-		// convert sizes from pixels to percentages
-		//
-		for (let i = 0; i < sizes.length; i++) {
-			if (typeof sizes[i] == 'string' && sizes[i].contains('px')) {
-				sizes[i] = parseInt(sizes[i].replace('px', '')) / this.$el.width() * 100;
-			}
-		}
-
-		// redistribute remaining width
-		//
-		let sum = 0;
-		let num = 0;
-		for (let i = 0; i < sizes.length; i++) {
-			if (sizes[i]) {
-				sum += sizes[i];
-				num++;
-			}
-		}
-		if (sum < 100) {
-			let size = (100 - sum) / (sizes.length - num);
-			for (let i = 0; i < sizes.length; i++) {
-				if (!sizes[i]) {
-					sizes[i] = size;
-				}
-			}
-		}
-
-		return sizes;
-	},
-
-	//
-	// sidebar opening / closing methods
-	//
-
-	openSideBar: function() {
-		this.setSideBarSize(this.getInitialSideBarSize());
-		this.onResize();
-	},
-
-	closeSideBar: function() {
-		this.prevSizes = this.getSizes();
-		this.setSideBarSize(0);
-	},
-
-	toggleSideBar: function() {
-		if (this.isSideBarOpen()) {
-			this.closeSideBar();
-		} else {
-			this.openSideBar();
-		}
-	},
-
-	//
-	// sidebar hiding / showing methods
-	//
-
-	hideSideBar: function() {
-		if (!this.splitter.hidden) {
-			this.closeSideBar();
-			this.$el.find('> .sidebar').hide();
-			this.$el.find('> .gutter').hide();
-			this.$el.find('> .mainbar').css({
-				'width': '100%',
-				'height': '100%'
-			});
-			this.splitter.hidden = true;
-		}
-	},
-
-	showSideBar: function() {
-		if (this.splitter.hidden) {
-			this.$el.find('> .sidebar').show();
-			this.$el.find('> .gutter').show();
-			this.openSideBar();
-			this.onResize();
-			this.splitter.hidden = false;
 		}
 	},
 
@@ -306,7 +124,7 @@ export default BaseView.extend({
 		// show splitter
 		//
 		this.showSplitter();
-		
+
 		// show child views
 		//
 		if (this.getSideBarView) {
@@ -318,7 +136,7 @@ export default BaseView.extend({
 
 		// set initial state
 		//
-		if (this.show_sidebar == false) {
+		if (this.show_sidebar === false) {
 			this.hideSideBar();
 		}
 	},
@@ -335,16 +153,16 @@ export default BaseView.extend({
 		//
 		this.setOrientation(this.orientation);
 
-		// create splitter 
+		// create splitter
 		//
 		this.splitter = Split(!this.flipped? [
-			this.$el.find('> .sidebar')[0], 
+			this.$el.find('> .sidebar')[0],
 			this.$el.find('> .mainbar')[0]
 		] : [
 			this.$el.find('> .mainbar')[0],
 			this.$el.find('> .sidebar')[0]
 		], {
-			
+
 			// options
 			//
 			direction: this.orientation,
@@ -358,14 +176,6 @@ export default BaseView.extend({
 				this.onResize();
 			}
 		});
-
-		// set min sizes
-		//
-		/*
-		if (this.minSizes) {
-			this.setMinSizes(this.minSizes);
-		}
-		*/
 	},
 
 	update: function() {
@@ -380,101 +190,6 @@ export default BaseView.extend({
 		}
 	},
 
-	adjustWidths: function() {
-		let gutterSize = this.getGutterSize();
-
-		// adjust sidebar
-		//
-		if (!this.flipped) {
-			if (this.sizes[0] == 100) {
-				this.$el.find('> .sidebar').css({
-					width: 'calc(100% - ' + gutterSize + 'px)'
-				});
-			}
-
-			// adjust mainbar
-			//
-			if (this.sizes[1] == 100) {
-				this.$el.find('> .mainbar').css({
-					width: 'calc(100% - ' + gutterSize + 'px)'
-				});
-			}
-		} else {
-
-			// adjust sidebar
-			//
-			if (this.sizes[1] == 100) {
-				this.$el.find('> .sidebar').css({
-					width: 'calc(100% - ' + gutterSize + 'px)'
-				});
-			}
-
-			// adjust mainbar
-			//
-			if (this.sizes[0] == 100) {
-				this.$el.find('> .mainbar').css({
-					width: 'calc(100% - ' + gutterSize + 'px)'
-				});
-			}						
-		}
-	},
-
-	adjustHeights: function() {
-		let gutterSize = this.getGutterSize();
-
-		if (!this.flipped) {
-
-			// adjust sidebar
-			//
-			if (this.sizes[0] == 100) {
-				this.$el.find('> .sidebar').css({
-					height: 'calc(100% - ' + gutterSize + 'px)'
-				});
-			}
-
-			// adjust mainbar
-			//
-			if (this.sizes[1] == 100) {
-				this.$el.find('> .mainbar').css({
-					height: 'calc(100% - ' + gutterSize + 'px)'
-				});
-			}	
-		} else {
-
-			// adjust sidebar
-			//
-			if (this.sizes[1] == 100) {
-				this.$el.find('> .sidebar').css({
-					height: 'calc(100% - ' + gutterSize + 'px)'
-				});
-			}
-
-			// adjust mainbar
-			//
-			if (this.sizes[0] == 100) {
-				this.$el.find('> .mainbar').css({
-					height: 'calc(100% - ' + gutterSize + 'px)'
-				});
-			}			
-		}
-	},
-
-	adjustSizes: function() {
-
-		// adjust widths and height for completely open or closed sidebar
-		//
-		switch (this.orientation) {
-			
-			case "horizontal":
-				this.adjustWidths();
-				break;
-
-			case "vertical":
-				this.adjustHeights();
-				break;
-		}
-	},
-
 	//
 	// event handling methods
 	//
@@ -486,7 +201,7 @@ export default BaseView.extend({
 		if (this.isDestroyed()) {
 			return;
 		}
-		
+
 		// apply to child views
 		//
 		if (this.hasChildView('sidebar') && this.getChildView('sidebar').onLoad) {
@@ -528,7 +243,7 @@ export default BaseView.extend({
 	//
 
 	onResize: function(event) {
-		
+
 		// apply to child views
 		//
 		if (this.hasChildView('sidebar') && this.getChildView('sidebar').onResize) {
@@ -538,4 +253,4 @@ export default BaseView.extend({
 			this.getChildView('mainbar').onResize(event);
 		}
 	},
-});
+}));

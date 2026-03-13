@@ -20,7 +20,6 @@ import Positioning from '../../views/dialogs/behaviors/positioning.js';
 import Dragging from '../../views/dialogs/behaviors/dragging.js';
 import Resizing from '../../views/dialogs/behaviors/resizing.js';
 import Browser from '../../utilities/web/browser.js';
-import '../../utilities/scripting/array-utils.js';
 import '../../../vendor/bootstrap/js/modal.js';
 
 export default BaseView.extend(_.extend(Positioning, Dragging, Resizing, {

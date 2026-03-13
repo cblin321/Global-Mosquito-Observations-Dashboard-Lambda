@@ -41,11 +41,11 @@ export default {
 	//
 
 	exists: function() {
-		return AddressBar.get('location').contains('?');
+		return AddressBar.get('location').includes('?');
 	},
 
 	has: function(key, options) {
-		return (this.value(key, options) != undefined);
+		return (this.value(key, options) !== undefined);
 	},
 
 	//
@@ -57,7 +57,7 @@ export default {
 
 		// get location after question mark symbol
 		//
-		if (location.contains('?')) {
+		if (location.includes('?')) {
 			let sections = location.split('?');
 			return sections[sections.length - 1];
 		}
@@ -87,12 +87,12 @@ export default {
 			// split key value pair by first equal sign
 			//
 			let equalSign = term.indexOf('=');
-			let string = term.substr(0, equalSign);
-			let value = term.substr(equalSign + 1, term.length);
+			let string = term.substring(0, equalSign);
+			let value = term.substring(equalSign + 1);
 
 			// check if key matches
 			//
-			if (key == string) {
+			if (key === string) {
 				return value;
 			}
 		}
@@ -125,12 +125,12 @@ export default {
 			// split key value pair by first equal sign
 			//
 			let equalSign = term.indexOf('=');
-			let string = term.substr(0, equalSign);
-			let value = term.substr(equalSign + 1, term.length);
+			let string = term.substring(0, equalSign);
+			let value = term.substring(equalSign + 1);
 
 			// check if key matches
 			//
-			if (string == key) {
+			if (string === key) {
 				values.push(value);
 			}
 		} 
@@ -162,7 +162,7 @@ export default {
 	//
 
 	add: function(key, value) {
-		if (typeof key != 'string') {
+		if (typeof key !== 'string') {
 			this.addAll(key);
 			return;
 		}
@@ -172,7 +172,7 @@ export default {
 	},
 
 	remove: function(key) {
-		if (typeof key != 'string') {
+		if (typeof key !== 'string') {
 			this.removeAll(key);
 			return;
 		}
@@ -198,9 +198,9 @@ export default {
 	//
 
 	concat: function(queryString, newString) {
-		if (queryString && queryString != '' && newString && (newString != undefined)) {
+		if (queryString && queryString !== '' && newString && (newString !== undefined)) {
 			return queryString + '&' + newString;
-		} else if (queryString && queryString != '') {
+		} else if (queryString && queryString !== '') {
 			return queryString;
 		} else {
 			return newString;
@@ -215,8 +215,8 @@ export default {
 		let queryString = '';
 		for (let key in data) {
 			let value = data[key];
-			if (value != undefined) {
-				if (typeof value != 'string') {
+			if (value !== undefined) {
+				if (typeof value !== 'string') {
 					value = value.toString();
 				}
 				queryString = this.concat(queryString, key + '=' + Url.encode(value));
@@ -248,8 +248,8 @@ export default {
 			// split key value pair by first equal sign
 			//
 			let equalSign = term.indexOf('=');
-			let key = term.substr(0, equalSign);
-			let value = term.substr(equalSign + 1, term.length);
+			let key = term.substring(0, equalSign);
+			let value = term.substring(equalSign + 1);
 
 			// check for array values
 			//

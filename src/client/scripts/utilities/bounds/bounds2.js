@@ -16,10 +16,10 @@ import Bounds from '../../utilities/bounds/bounds.js';
 export default class Bounds2 {
 
 	constructor(x, y) {
-		if (x == undefined) {
+		if (x === undefined) {
 			x = new Bounds();
 		}
-		if (y == undefined) {
+		if (y === undefined) {
 			y = new Bounds();
 		}
 

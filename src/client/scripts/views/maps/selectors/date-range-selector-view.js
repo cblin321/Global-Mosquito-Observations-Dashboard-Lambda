@@ -42,9 +42,9 @@ export default BaseView.extend({
 	hasValue: function(key) {
 		switch (key) {
 			case 'start_date':
-				return this.getValue('start_date') != '';
+				return this.getValue('start_date') !== '';
 			case 'end_date':
-				return this.getValue('end_date') != '';
+				return this.getValue('end_date') !== '';
 		}
 	},
 

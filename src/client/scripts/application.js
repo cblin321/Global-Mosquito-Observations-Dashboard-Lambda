@@ -26,8 +26,6 @@ import QueryString from './utilities/web/query-string.js';
 // system utilities
 //
 import './utilities/time/date-format.js';
-import './utilities/scripting/string-utils.js';
-import './utilities/scripting/array-utils.js';
 import './utilities/web/html-utils.js';
 
 export default Marionette.Application.extend(_.extend({}, DialogRenderable, {
@@ -55,12 +53,19 @@ export default Marionette.Application.extend(_.extend({}, DialogRenderable, {
 	// constructor
 	//
 
-	initialize: function() {
+	initialize: function(options) {
+
+		// make config and defaults globally accessible
+		//
+		if (options && options.config) {
+			window.config = options.config;
+			window.defaults = options.defaults;
+		}
 
 		// add helpful class for mobile OS'es
 		//
 		$('body').attr('device', Browser.device);
-		if (Browser.device == 'phone' || Browser.device == 'tablet') {
+		if (Browser.device === 'phone' || Browser.device === 'tablet') {
 			$('body').addClass('mobile');
 		}
 
@@ -68,9 +73,11 @@ export default Marionette.Application.extend(_.extend({}, DialogRenderable, {
 		//
 		window.application = this;
 
-		// create routers
+		// create router
 		//
-		this.router = new Router();
+		if (!this.router) {
+			this.router = new Router();
+		}
 
 		// toggle dark mode
 		//

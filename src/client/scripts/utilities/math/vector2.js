@@ -25,7 +25,7 @@ export default class Vector2 {
 	//
 
 	equals(vector) {
-		return (vector && (this.x == vector.x) && (this.y == vector.y));
+		return (vector && (this.x === vector.x) && (this.y === vector.y));
 	}
 
 	clone() {
@@ -200,7 +200,7 @@ export default class Vector2 {
 	}
 
 	static average(vertices) {
-		if (!vertices || vertices.length == 0) {
+		if (!vertices || vertices.length === 0) {
 			return;
 		}
 
@@ -212,7 +212,7 @@ export default class Vector2 {
 	}
 
 	static center(vertices) {
-		if (!vertices || vertices.length == 0) {
+		if (!vertices || vertices.length === 0) {
 			return;
 		}
 

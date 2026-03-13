@@ -22,15 +22,15 @@ function base(address) {
 	// get address before question mark symbol
 	//
 	index = address.indexOf('?');
-	if (index != -1) {
-		address = address.substr(0, index);
+	if (index !== -1) {
+		address = address.substring(0, index);
 	}
 
 	// get location before hash symbol
 	//
 	index = address.indexOf('#');
-	if (index != -1) {
-		address = address.substr(0, index);
+	if (index !== -1) {
+		address = address.substring(0, index);
 	}
 
 	return address;

@@ -44,7 +44,7 @@ export default BaseView.extend({
 				<a id="<%= id %>"><%= text %></a>
 				<% } %>
 
-				<% if (i != keys.length - 1) { %> | <% } %>
+				<% if (i !== keys.length - 1) { %> | <% } %>
 				<% } %>
 				<% } %>
 			</p>

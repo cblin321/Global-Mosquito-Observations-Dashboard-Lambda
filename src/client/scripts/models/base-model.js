@@ -25,11 +25,11 @@ export default Backbone.Model.extend({
 		if (!model) {
 			return false;
 		}
-		if (this == model) {
+		if (this === model) {
 			return true;
 		}
 		let id = this.get(this.idAttribute);
-		return id && id == model.get(model.idAttribute);
+		return id && id === model.get(model.idAttribute);
 	},
 
 	//

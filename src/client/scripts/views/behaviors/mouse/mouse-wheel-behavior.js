@@ -28,10 +28,10 @@ function MouseWheelBehavior(element, options) {
 	if (!options) {
 		options = {};
 	}
-	if (options.on == undefined) {
+	if (options.on === undefined) {
 		options.on = true;
 	}
-	if (options.blocking == undefined) {
+	if (options.blocking === undefined) {
 		options.blocking = false;
 	}
 

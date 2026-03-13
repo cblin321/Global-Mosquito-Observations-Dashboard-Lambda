@@ -79,9 +79,9 @@ export default {
 	getElapsedTime: function(date1, date2, options) {
 		let seconds = this.getElapsedSeconds(date1, date2);
 
-		if (options == 'seconds') {
+		if (options === 'seconds') {
 			return seconds;
-		} else if (typeof options == 'string') {
+		} else if (typeof options === 'string') {
 			return this.secondsToUnits(seconds, options);
 		} else {
 			return this.secondsToTime(seconds, options);
@@ -125,7 +125,7 @@ export default {
 		let sign = Math.sign(seconds);
 		let time = {};
 
-		if (seconds == undefined) {
+		if (seconds === undefined) {
 			return;
 		}
 		
@@ -215,14 +215,14 @@ export default {
 
 		// convert to string
 		//
-		if (time.years && (!options || options.years != false)) {
+		if (time.years && (!options || options.years !== false)) {
 			if (options && options.verbose) {
 				string += time.years + ' ' + (time.years > 1? 'years' : 'year');
 			} else {
 				string += time.years + 'y';
 			}
 		}
-		if (time.months && (!options || options.months != false)) {
+		if (time.months && (!options || options.months !== false)) {
 			if (string) {
 				string += ' ';
 			}
@@ -232,7 +232,7 @@ export default {
 				string += time.months + 'mo';
 			}
 		}
-		if (time.weeks && (!options || options.weeks != false)) {
+		if (time.weeks && (!options || options.weeks !== false)) {
 			if (string) {
 				string += ' ';
 			}
@@ -242,7 +242,7 @@ export default {
 				string += time.weeks + 'wk';
 			}
 		}
-		if (time.days && (!options || options.days != false)) {
+		if (time.days && (!options || options.days !== false)) {
 			if (string) {
 				string += ' ';
 			}
@@ -252,7 +252,7 @@ export default {
 				string += time.days + 'd';
 			}
 		}
-		if (time.hours && (!options || options.hours != false)) {
+		if (time.hours && (!options || options.hours !== false)) {
 			if (string) {
 				string += ' ';
 			}
@@ -262,7 +262,7 @@ export default {
 				string += time.hours + 'h';
 			}
 		}
-		if (time.minutes && (!options || options.minutes != false)) {
+		if (time.minutes && (!options || options.minutes !== false)) {
 			if (string) {
 				string += ' ';
 			}
@@ -272,7 +272,7 @@ export default {
 				string += time.minutes + 'm';
 			}
 		}
-		if (time.seconds && (!options || options.seconds != false)) {
+		if (time.seconds && (!options || options.seconds !== false)) {
 			if (string) {
 				string += ' ';
 			}

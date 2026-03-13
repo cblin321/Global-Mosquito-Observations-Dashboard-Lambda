@@ -22,14 +22,14 @@ export default {
 	//
 
 	isFullSize: function() {
-		return window.innerWidth == screen.width &&
-			window.innerHeight == screen.height;
+		return window.innerWidth === screen.width &&
+			window.innerHeight === screen.height;
 	},
 
 	isFullScreen: function() {
-		return (document.fullScreenElement != undefined && document.fullScreenElement !== null) || 
-			(document.mozFullScreen != undefined && document.mozFullScreen === true) || 
-			(document.webkitIsFullScreen != undefined && document.webkitIsFullScreen === true);
+		return (document.fullScreenElement !== undefined && document.fullScreenElement !== null) ||
+			(document.mozFullScreen !== undefined && document.mozFullScreen === true) || 
+			(document.webkitIsFullScreen !== undefined && document.webkitIsFullScreen === true);
 	},
 
 	requestFullScreen: function(element) {

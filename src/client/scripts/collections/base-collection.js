@@ -22,37 +22,19 @@ export default Backbone.Collection.extend({
 	//
 
 	contains: function(model) {
-		for (let i = 0; i < this.length; i++) {
-			if (this.at(i) == model) {
-				return true;
-			}
-		}
-		return false;
+		return this.models.includes(model);
 	},
 
 	indexOf: function(model) {
-		for (let i = 0; i < this.length; i++) {
-			if (this.at(i) == model) {
-				return i;
-			}
-		}
+		return this.models.indexOf(model);
 	},
 
 	includes: function(model) {
-		for (let i = 0; i < this.length; i++) {
-			if (this.at(i).is(model)) {
-				return true;
-			}
-		}
-		return false;
+		return this.models.some(item => item.is(model));
 	},
 
 	indexOfValue: function(model) {
-		for (let i = 0; i < this.length; i++) {
-			if (this.at(i).is(model)) {
-				return i;
-			}
-		}
+		return this.models.findIndex(item => item.is(model));
 	},
 	
 	//
@@ -97,7 +79,7 @@ export default Backbone.Collection.extend({
 		});
 
 		this.each((item) => {
-			if (item.get(attribute).toLowerCase() == value) {
+			if (item.get(attribute).toLowerCase() === value) {
 				collection.add(item);
 			}
 		});
@@ -115,7 +97,7 @@ export default Backbone.Collection.extend({
 		});
 
 		this.each((item) => {
-			if (item.get(attribute).toLowerCase() != value) {
+			if (item.get(attribute).toLowerCase() !== value) {
 				collection.add(item);
 			}
 		});

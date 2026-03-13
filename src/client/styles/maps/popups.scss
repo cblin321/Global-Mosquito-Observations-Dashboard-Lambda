@@ -30,8 +30,8 @@ $dark-background-color: colors.$very-very-dark-grey;
 
 .leaflet-container {
 	.leaflet-popup-content {
-		width: 100%;
-		max-height: 420px;
+		width: 320px !important;
+		max-height: 600px;
 		overflow: auto;
 
 		.title {
@@ -52,29 +52,47 @@ $dark-background-color: colors.$very-very-dark-grey;
 		}
 
 		.photos {
-			display: block;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
 			width: 100%;
 			text-align: center;
 
+			.group {
+				display: flex;
+			}
+
 			.photo {
 				display: inline-flex;
+				width: 100px;
 				position: relative;
 				flex-direction: column;
-				margin: 0;
+				margin: 2px;
 
-				a {
-					width: 90px;
-					height: 90px;
-					background-position: center;
-					background-size: cover;
+				.preview {
+					display: flex;
+					width: 100px;
+					height: 100px;
+					background: black;
+					border: 1px solid white;
+
+					img {
+						max-width: 100%;
+						max-height: 100%;
+						margin: auto;
+					}
+				}
+
+				.bounding-box {
+					position: absolute;
+					outline: 2px solid red;
 				}
 
 				label {
-					position: absolute;
+					// position: absolute;
 					text-align: center;
 					padding: 0 5px;
-					background: black;
-					color: white;
+					// font-size: 12px;
 				}
 			}
 		}
@@ -113,5 +131,12 @@ $dark-background-color: colors.$very-very-dark-grey;
 	.leaflet-popup-content-wrapper, .leaflet-popup-tip {
 		color: $dark-color;
 		background: $dark-background-color;
+
+		.photo {
+			label {
+				// background: black;
+				color: white;
+			}
+		}
 	}
 }

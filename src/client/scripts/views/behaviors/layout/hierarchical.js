@@ -25,7 +25,7 @@ export default {
 		if (name.includes(' ')) {
 			return this.hasGrandChildView(name);
 		}
-		return this.getChildView(name) != undefined;
+		return this.getChildView(name) !== undefined;
 	},
 
 	hasGrandChildView: function(name) {
@@ -53,7 +53,7 @@ export default {
 	},
 
 	hasParentViewById: function(id) {
-		if (this.$el.attr('id') == id) {
+		if (this.$el.attr('id') === id) {
 			return true;
 		} else if (this.parent && this.parent.hasParentViewById) {
 			return this.parent.hasParentViewById(id);
@@ -112,7 +112,7 @@ export default {
 	},
 
 	getParentViewById: function(id) {
-		if (this.$el.attr('id') == id) {
+		if (this.$el.attr('id') === id) {
 			return this;
 		} else if (this.parent && this.parent.getParentViewById) {
 			return this.parent.getParentViewById(id);

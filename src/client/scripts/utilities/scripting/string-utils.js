@@ -10,38 +10,22 @@
 |            Copyright (c) 2013 SWAMP - Software Assurance Marketplace         |
 \******************************************************************************/
 
-String.prototype.toTitleCase = function () {
-	return this.replace(/\w\S*/g, function(txt) {
-		return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+export function toTitleCase(string) {
+	return string.replace(/\w\S*/g, function(txt) {
+		return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
 	});
-};
+}
 
-String.prototype.capitalize = function(){
-	return this.replace( /(^|\s)([a-z])/g , function(m,p1,p2) {
+export function capitalize(string) {
+	return string.replace( /(^|\s)([a-z])/g , function(m,p1,p2) {
 		return p1+p2.toUpperCase();
 	});
-};
-
-String.prototype.startsWith = function(prefix) {
-	let from = 0;
-	let to = prefix.length;
-	return prefix == this.substring(from, to);
 }
 
-String.prototype.endsWith = function(suffix) {
-	let from = this.length - suffix.length;
-	let to = this.length;
-	return suffix == this.substring(from, to);
-}
-
-String.prototype.contains = function(substring) {
-	return this.indexOf(substring) != -1;
-};
-
-String.prototype.truncatedTo = function(maxChars) {
-	if (this.length > maxChars) {
-		return this.slice(0, maxChars) + '...';
+export function truncatedTo(string, maxChars) {
+	if (string.length > maxChars) {
+		return string.slice(0, maxChars) + '...';
 	} else {
-		return this;
+		return string;
 	}
-};
+}

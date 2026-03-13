@@ -145,12 +145,12 @@ export default {
 	},
 
 	encodeText: function(text) {
-		if (typeof(text) == 'string') {
+		if (typeof(text) === 'string') {
 		
 			// string text
 			//
 			return this.encode(text);
-		} else if (text.length == 1) {
+		} else if (text.length === 1) {
 		
 			// single line text
 			//
@@ -182,7 +182,7 @@ export default {
 			
 			// check each escape code
 			//
-			if (code == '%12') {
+			if (code === '%12') {
 				
 				// start new line
 				//

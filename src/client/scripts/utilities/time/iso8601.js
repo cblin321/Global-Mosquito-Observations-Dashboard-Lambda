@@ -1,7 +1,7 @@
 Date.parseIso8601 = function(currentDate) {
     // Check the input parameters
     //
-    if (typeof currentDate != "string" || currentDate == "") {
+    if (typeof currentDate !== "string" || currentDate === "") {
         return null;
     }
     // Set the fragment expressions
@@ -52,7 +52,7 @@ Date.parseIso8601 = function(currentDate) {
     if (!fragments[8]) {
         fragments[8] = null;
     }
-    if (fragments[9] != "-" && fragments[9] != "+" ) {
+    if (fragments[9] !== "-" && fragments[9] !== "+" ) {
         fragments[9] = null;
     }
     if (!fragments[10]) {
@@ -72,13 +72,13 @@ Date.parseIso8601 = function(currentDate) {
     }
     // If the UTC indicator is set the date is UTC
     //
-    if (fragments[8] == "Z") {
+    if (fragments[8] === "Z") {
         return new Date(Date.UTC(fragments[1], fragments[2], fragments[3], fragments[4], fragments[5], fragments[6], fragments[7]));
     }
     
     // If the date has a time zone offset
     //
-    if (fragments[9] == "-" || fragments[9] == "+") {
+    if (fragments[9] === "-" || fragments[9] === "+") {
         // Get current time zone information
         //
         let timezoneOffset = new Date().getTimezoneOffset();
