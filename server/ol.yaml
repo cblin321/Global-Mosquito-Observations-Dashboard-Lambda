@@ -1,0 +1,12 @@
+triggers:
+  http:
+    - method: POST
+    - method: GET
+environment:
+  OL_ENTRY_FILE: "app.py"
+  FLASK_ENV: "development"
+  DB_HOST: "localhost"
+  DB_PORT: "3306"
+  DB_USERNAME: "webuser"
+  DB_DATABASE: "mosquito_dashboard"
+  #DB_PASSWORD: "password"

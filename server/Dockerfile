@@ -1,0 +1,27 @@
+FROM ubuntu:22.04
+
+RUN apt-get update && apt-get -y install \
+    wget apt-transport-https curl \
+    python3 python3-dev python3-pip python-is-python3 \
+    build-essential libseccomp-dev
+RUN pip3 install --upgrade pip
+RUN pip3 install virtualenv requests python-dotenv
+
+COPY ./requirements.txt /requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+RUN mkdir /runtimes
+
+# Build the python module also in the Container
+RUN mkdir /runtimes/python
+COPY runtimes/python /tmp/py-runtime
+RUN cd /tmp/py-runtime && python3 setup.py build_ext --inplace
+RUN mv /tmp/py-runtime/ol.*.so /runtimes/python/ol.so
+RUN mv /tmp/py-runtime/server.py /runtimes/python/server.py
+RUN mv /tmp/py-runtime/server_legacy.py /runtimes/python/server_legacy.py
+RUN mv /tmp/py-runtime/server_common.py /runtimes/python/server_common.py
+RUN rm -rf /tmp/py-runtime
+
+COPY spin /
+
+CMD ["/spin"]

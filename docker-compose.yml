@@ -1,29 +1,5 @@
 services:
 
-  www:
-    image: httpd:latest
-    depends_on:
-      - server
-    ports:
-      - "80:80"
-    volumes:
-      - ./src/client:/usr/local/apache2/htdocs
-      - ./data:/var/www/data
-    networks:
-      - network
-
-  server:
-    build: ./src/server
-    ports:
-      - "5000:5000"
-    depends_on:
-      db:
-        condition: service_healthy
-    volumes:
-      - ./src/server:/app
-    networks:
-      - network
-
   db:
     image: mysql:latest
     environment:
@@ -42,18 +18,6 @@ services:
     volumes:
       - ./database:/docker-entrypoint-initdb.d
       - ./mysql:/var/lib/mysql
-    networks:
-      - network
-
-  phpmyadmin:
-    depends_on:
-      - db
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - 8001:80
-    environment:
-      - PMA_HOST=db
-      - PMA_PORT=3306
     networks:
       - network
 

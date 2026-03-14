@@ -1,0 +1,11 @@
+{
+	"sandbox": "docker",
+	"docker": {
+		"base_image": "mosquito_server",
+		"network_mode": "container:mosquito_db"
+    },
+
+	"features": {
+        "import_cache": ""
+    }
+}
